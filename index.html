@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Dashboard</title>
+    <script src="./index.js" defer></script>
+    <link rel="stylesheet" href="./style.css"/>
+</head>
+<body>
+    
+    <div class="login-screen">
+        <h1>Spotify Dashboard</h1>
+        <button id="login-btn">Se connecter avec Spotify</button>
+    </div>
+
+    <div class="dashboard">
+
+        <div class="spotify-profil">
+            <div class="profil-first-section">
+                <div class="profil-infos">
+                    <img class="profil-avatar" src="" alt="avatar">
+                    <div class="profil-txt">
+                        <span class="profil-label">Profil</span>
+                        <h1 class="profil-name">Julien</h1>
+                           <span class="profil-stats">4 playlists • 177 abonnés • 15 abonnés</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="top-artists">
+            <div class="top-artists-container"> 
+            <h2 class="top-artists-txt">Top artistes <span class="time-value">du mois</span></h2>
+            <select id="time-range">
+                <option value="short_term">4 dernières semaines</option>
+                <option value="medium_term">6 derniers mois</option>
+                <option value="long_term">Depuis toujours</option>
+            </select>
+            </div>
+            <span class="top-artists-label">Visibles uniquement par vous</span>
+            <div class="all-top-artists">     
+            </div>
+        </div>
+
+        <div class="top-tracks">
+        <h2 class="top-tracks-txt">Top sons <span class="time-value">du mois</span></h2>
+        <span class="top-artists-label">Visibles uniquement par vous</span>
+            <div class="tracks">
+                <div class="song">
+                    <span class="song-number">1</span>
+                    <img src="" alt="song cover" class="song-cover">
+                    <div class="song-name-artist">
+                        <span class="song-name"></span>
+                        <span class="artist-name"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
+
+
+
+<!--<div class="artist-card">
+                    <img class="artist-avatar" src="https://i.scdn.co/image/ab6761610000e5ebc0b860256b49e3f681d491eb" alt="Avatar de l'artist">
+                    <div class="play-btn">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                    <span class="artist-name">PLK</span>
+                    <span class="artist-label">Artiste</span>
+                </div>-->

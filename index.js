@@ -50,7 +50,7 @@ loginBtn.addEventListener('click', async () => {
     const challenge = await generateCodeChallenge(verifier)
     localStorage.setItem('codeVerifier', verifier)
 
-    const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&scope=streaming user-read-email user-read-private playlist-read-private user-top-read user-follow-read&code_challenge_method=S256&code_challenge=${challenge}`
+    const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&scope=streaming user-read-email user-read-private playlist-read-private user-top-read user-library-read user-read-playback-state user-follow-read&code_challenge_method=S256&code_challenge=${challenge}`
 
     window.location.href = authUrl
 })
@@ -127,7 +127,6 @@ async function getTopArtists(timeRange) {
         let changeTimeValue = document.querySelectorAll('.time-value')
 
         const dataTA = await responseTA.json()
-        console.log(dataTA)
         let artistName = ''
         let artistAvatar = ''
         let timeValueObject = {
@@ -147,7 +146,6 @@ async function getTopArtists(timeRange) {
             createTopArtists(artistAvatar, artistName)
         });
 
-        console.log(artistName)
     } catch (error) {
         console.error(error)
     }
@@ -176,24 +174,25 @@ async function getTopTracks(timeRange) {
         })
 
         const dataTracks = await responseTracks.json()
-        console.log(dataTracks)
         let nbSong = ''
         let songCover = ''
         let songName = ''
         let songArtist = ''
-
+        let songId = ''
         document.querySelector('.tracks').innerHTML = ''
         dataTracks.items.forEach((e, index) => {
+            songId = e.id
 
+//faire une fonction getAudioFeatures(songId) avec le lien vers l'api et prendre les stats etc
             nbSong = index +1
             songCover = e.album.images[0]?.url
             songName = e.name
             songArtist = e.artists[0].name
             durationTime = convert(e.duration_ms)
             createTopTracks(nbSong, songCover, songName, songArtist, durationTime)
+            getAudioFeatures(songId)
         })
 
-        console.log(`Num du son: ${nbSong}, Cover du son: ${songCover}, Nom du son: ${songName}, Artist: ${songArtist}, Durée: ${durationTime}`)
 
     } catch (error) {
         console.log(error)
@@ -201,6 +200,27 @@ async function getTopTracks(timeRange) {
 
 
 }
+
+async function getAudioFeatures(songId) {
+    
+    try {
+        
+        const responseAudioFeatures = await fetch(`https://api.spotify.com/v1/audio-features/${songId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+
+        const dataAudioFeatures = await responseAudioFeatures.json()
+        console.log(dataAudioFeatures)
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+
+
 
 
 function createTopTracks(nbSong, songCover, songName, songArtist, durationTime) {
@@ -213,6 +233,9 @@ function createTopTracks(nbSong, songCover, songName, songArtist, durationTime) 
         const nameSong = document.createElement('span')
         const nameArtist = document.createElement('span')
         const duration = document.createElement('span')
+        const durationContainer = document.createElement('div')
+        const artistContainer = document.createElement('div')
+
 
         duration.classList.add('duration-label')
         song.classList.add('song')
@@ -221,7 +244,8 @@ function createTopTracks(nbSong, songCover, songName, songArtist, durationTime) 
         songNameArtist.classList.add('song-name-artist')
         nameSong.classList.add('song-name')
         nameArtist.classList.add('artist-name')
-
+        durationContainer.classList.add('duration-container')
+        artistContainer.classList.add('artist-container')
 
 
         duration.textContent = durationTime
@@ -232,7 +256,9 @@ function createTopTracks(nbSong, songCover, songName, songArtist, durationTime) 
 
         tracksContainer.appendChild(song)
         song.append(songnb, cover, songNameArtist)
-        songNameArtist.append(nameSong, nameArtist, duration)
+        durationContainer.append(duration)
+        artistContainer.append(nameSong, nameArtist)
+        songNameArtist.append(artistContainer, durationContainer)
 
 
 }

@@ -13,10 +13,24 @@ body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
-    background-color: #fff;
-    color: #000;
+    background-color: #181818;
+    color: #fff;
+
 }
 
+.login-screen button{
+    background-color: #24cc5f;
+    color: #000;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 100%;
+    font-size: 1rem;
+}
+.login-screen button:hover {
+    background-color: #1db954;
+}
 .dashboard {
     display: flex;
     width: 80%;
@@ -90,6 +104,7 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
+    justify-content: center;
 }
 
 .artist-card {
@@ -105,9 +120,9 @@ body {
 }
 
 .artist-name{
-    font-size: 1rem;
-    font-weight: 700;
-    
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #b3b3b3;
 }
 
 
@@ -227,9 +242,19 @@ select {
 }
 
 .song-name-artist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+}
+ .duration-container{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+.artist-container {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px
 }
 
 .song-name {

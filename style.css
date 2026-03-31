@@ -278,3 +278,38 @@ select {
     color: #b3b3b3;
     text-align: right;
 }
+
+.chart-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.chart {
+    width: 50%;
+}
+
+.disconnect {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+.disconnectbtn {
+    background: none;
+    border: none;
+    color: #b3b3b3;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+}
+.disconnectbtn:hover {
+    color: #fff;
+    background-color: #b3b3b31f;
+}

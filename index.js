@@ -7,8 +7,13 @@ const token = localStorage.getItem('token')
 const loginBtn = document.querySelector('#login-btn')
 const loginScreen = document.querySelector('.login-screen')
 const dashboard = document.querySelector('.dashboard')
+const disconnectBtn = document.querySelector('.disconnect')
 
 
+disconnectBtn.addEventListener('click', ()=>{
+    localStorage.clear()
+    window.location.href = './index.html'
+})
 
 if (token) {
     loginScreen.style.display = 'none'
@@ -129,6 +134,7 @@ async function getTopArtists(timeRange) {
         const dataTA = await responseTA.json()
         let artistName = ''
         let artistAvatar = ''
+        let musicalGenre = ''
         let timeValueObject = {
             'short_term' : 'des 4 dernières semaines',
             'medium_term' : 'des 6 derniers mois',
@@ -140,12 +146,16 @@ async function getTopArtists(timeRange) {
 
         document.querySelector('.all-top-artists').innerHTML = ''
 
+
         dataTA.items.forEach(element => {
+            musicalGenre = element.genres
             artistAvatar = element.images[0]?.url
             artistName = element.name
+            
+            
             createTopArtists(artistAvatar, artistName)
         });
-
+        getArtistGenre()
     } catch (error) {
         console.error(error)
     }
@@ -153,6 +163,22 @@ async function getTopArtists(timeRange) {
 }
 
 
+
+async function getArtistGenre() {
+    try {
+        
+        const rArtistGenre = await fetch(`https://api.spotify.com/v1/artists?ids=3DCWeG2J1fZeu0Oe6i5Q6m`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+
+        const dataArtistGenre = await rArtistGenre.json()
+        console.log(dataArtistGenre)
+    } catch (error) {
+        
+    }
+}
 
 
 function convert(ms) {
@@ -190,32 +216,14 @@ async function getTopTracks(timeRange) {
             songArtist = e.artists[0].name
             durationTime = convert(e.duration_ms)
             createTopTracks(nbSong, songCover, songName, songArtist, durationTime)
-            getAudioFeatures(songId)
         })
 
 
-    } catch (error) {
-        console.log(error)
-    }
-
-
-}
-
-async function getAudioFeatures(songId) {
-    
-    try {
         
-        const responseAudioFeatures = await fetch(`https://api.spotify.com/v1/audio-features/${songId}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-
-        const dataAudioFeatures = await responseAudioFeatures.json()
-        console.log(dataAudioFeatures)
     } catch (error) {
         console.log(error)
     }
+
 
 }
 
@@ -309,3 +317,4 @@ function changeProfilInfos( { name, followers, following, nbPlaylists, avatar } 
 
 
 }
+

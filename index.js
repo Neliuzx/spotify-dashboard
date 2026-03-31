@@ -124,7 +124,7 @@ async function getTopArtists(timeRange) {
                 'Authorization': `Bearer ${token}`
             }
         })
-        let changeTimeValue = document.querySelector('.time-value')
+        let changeTimeValue = document.querySelectorAll('.time-value')
 
         const dataTA = await responseTA.json()
         console.log(dataTA)
@@ -137,7 +137,7 @@ async function getTopArtists(timeRange) {
 
         }
 
-        changeTimeValue.textContent = timeValueObject[`${timeRange}`]
+        changeTimeValue.forEach(el => el.textContent = timeValueObject[timeRange])
 
         document.querySelector('.all-top-artists').innerHTML = ''
 
@@ -155,6 +155,17 @@ async function getTopArtists(timeRange) {
 }
 
 
+
+
+function convert(ms) {
+    const minutes = Math.floor(ms / 1000 / 60)
+    const seconds = Math.floor((ms / 1000) % 60)
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`
+}
+
+
+
+
 async function getTopTracks(timeRange) {
     
     try {
@@ -166,14 +177,65 @@ async function getTopTracks(timeRange) {
 
         const dataTracks = await responseTracks.json()
         console.log(dataTracks)
+        let nbSong = ''
+        let songCover = ''
+        let songName = ''
+        let songArtist = ''
+
+        document.querySelector('.tracks').innerHTML = ''
+        dataTracks.items.forEach((e, index) => {
+
+            nbSong = index +1
+            songCover = e.album.images[0]?.url
+            songName = e.name
+            songArtist = e.artists[0].name
+            durationTime = convert(e.duration_ms)
+            createTopTracks(nbSong, songCover, songName, songArtist, durationTime)
+        })
+
+        console.log(`Num du son: ${nbSong}, Cover du son: ${songCover}, Nom du son: ${songName}, Artist: ${songArtist}, Durée: ${durationTime}`)
 
     } catch (error) {
-        console(error)
+        console.log(error)
     }
 
 
 }
 
+
+function createTopTracks(nbSong, songCover, songName, songArtist, durationTime) {
+ const songNumber = document.querySelector('.song-number')
+        const tracksContainer = document.querySelector('.tracks')
+        const song = document.createElement('div')
+        const songnb = document.createElement('span')
+        const cover = document.createElement('img')
+        const songNameArtist = document.createElement('div')
+        const nameSong = document.createElement('span')
+        const nameArtist = document.createElement('span')
+        const duration = document.createElement('span')
+
+        duration.classList.add('duration-label')
+        song.classList.add('song')
+        songnb.classList.add('song-number')
+        cover.classList.add('song-cover')
+        songNameArtist.classList.add('song-name-artist')
+        nameSong.classList.add('song-name')
+        nameArtist.classList.add('artist-name')
+
+
+
+        duration.textContent = durationTime
+        nameSong.textContent = songName
+        cover.src = songCover
+        nameArtist.textContent = songArtist
+        songnb.textContent = nbSong
+
+        tracksContainer.appendChild(song)
+        song.append(songnb, cover, songNameArtist)
+        songNameArtist.append(nameSong, nameArtist, duration)
+
+
+}
 
 function createTopArtists(artistAvatar, artistName) {
 

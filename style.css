@@ -184,3 +184,72 @@ select {
     margin: 30px;
     flex-direction: column;
 }
+
+.top-tracks-txt {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.tracks {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.song {
+    display: grid;
+    grid-template-columns: 20px 50px 1fr 30px;
+    align-items: center;
+    gap: 15px;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.song:hover {
+    background-color: #b3b3b31f;
+}
+
+.song-number {
+    color: #b3b3b3;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.song-cover {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.song-name-artist {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.song-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.song-artist {
+    font-size: 0.8rem;
+    color: #b3b3b3;
+}
+
+.song-duration {
+    font-size: 0.85rem;
+    color: #b3b3b3;
+    text-align: right;
+}
+
+.duration-label {
+    font-size: 0.85rem;
+    color: #b3b3b3;
+    text-align: right;
+}
